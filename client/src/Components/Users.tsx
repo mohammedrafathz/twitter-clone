@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Key} from 'react'
 import {gql, useQuery} from '@apollo/client'
 
 const USERS_QUERY = gql`
@@ -23,8 +23,8 @@ const Users = () => {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <div>
-      {data.users.map((u: User) => <p>{u.name}</p>)}
+    <div> 
+      {data.users.map((u: User, index: Key) => <p key={index}>{u.name}</p>)}
     </div>
   )
 }
