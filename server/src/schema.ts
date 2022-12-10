@@ -1,8 +1,8 @@
-import { permissions } from './permissions'
-import { APP_SECRET, getUserId } from './utils'
-import { compare, hash } from 'bcryptjs'
-import { sign } from 'jsonwebtoken'
-import { applyMiddleware } from 'graphql-middleware'
+import {permissions} from './permissions'
+import {APP_SECRET, getUserId} from './utils'
+import {compare, hash} from 'bcryptjs'
+import {sign} from 'jsonwebtoken'
+import {applyMiddleware} from 'graphql-middleware'
 import {
   intArg,
   makeSchema,
@@ -14,8 +14,8 @@ import {
   asNexusMethod,
   enumType,
 } from 'nexus'
-import { DateTimeResolver } from 'graphql-scalars'
-import { Context } from './context'
+import {DateTimeResolver} from 'graphql-scalars'
+import {Context} from './context'
 
 export const DateTime = asNexusMethod(DateTimeResolver, 'date')
 
@@ -48,13 +48,13 @@ const Query = objectType({
       },
       resolve: (_parent, args, context: Context) => {
         return context.prisma.post.findUnique({
-          where: { id: args.id || undefined },
+          where: {id: args.id || undefined},
         })
       },
     })
 
-    t.nonNull.list.nonNull.field('feed', {
-      type: 'Post',
+    t.nonNull.list.nonNull.field('users', {
+      type: 'User',
       args: {
         searchString: stringArg(),
         skip: intArg(),
@@ -66,22 +66,14 @@ const Query = objectType({
       resolve: (_parent, args, context: Context) => {
         const or = args.searchString
           ? {
-              OR: [
-                { title: { contains: args.searchString } },
-                { content: { contains: args.searchString } },
-              ],
-            }
+            OR: [
+              {title: {contains: args.searchString}},
+              {content: {contains: args.searchString}},
+            ],
+          }
           : {}
 
-        return context.prisma.post.findMany({
-          where: {
-            published: true,
-            ...or,
-          },
-          take: args.take || undefined,
-          skip: args.skip || undefined,
-          orderBy: args.orderBy || undefined,
-        })
+        return context.prisma.user.findMany();
       },
     })
 
@@ -132,7 +124,7 @@ const Mutation = objectType({
           },
         })
         return {
-          token: sign({ userId: user.id }, APP_SECRET),
+          token: sign({userId: user.id}, APP_SECRET),
           user,
         }
       },
@@ -144,7 +136,7 @@ const Mutation = objectType({
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
-      resolve: async (_parent, { email, password }, context: Context) => {
+      resolve: async (_parent, {email, password}, context: Context) => {
         const user = await context.prisma.user.findUnique({
           where: {
             email,
@@ -158,7 +150,7 @@ const Mutation = objectType({
           throw new Error('Invalid password')
         }
         return {
-          token: sign({ userId: user.id }, APP_SECRET),
+          token: sign({userId: user.id}, APP_SECRET),
           user,
         }
       },
@@ -193,14 +185,14 @@ const Mutation = objectType({
       resolve: async (_, args, context: Context) => {
         try {
           const post = await context.prisma.post.findUnique({
-            where: { id: args.id || undefined },
+            where: {id: args.id || undefined},
             select: {
               published: true,
             },
           })
           return context.prisma.post.update({
-            where: { id: args.id || undefined },
-            data: { published: !post?.published },
+            where: {id: args.id || undefined},
+            data: {published: !post?.published},
           })
         } catch (e) {
           throw new Error(
@@ -217,7 +209,7 @@ const Mutation = objectType({
       },
       resolve: (_, args, context: Context) => {
         return context.prisma.post.update({
-          where: { id: args.id || undefined },
+          where: {id: args.id || undefined},
           data: {
             viewCount: {
               increment: 1,
@@ -234,7 +226,7 @@ const Mutation = objectType({
       },
       resolve: (_, args, context: Context) => {
         return context.prisma.post.delete({
-          where: { id: args.id },
+          where: {id: args.id},
         })
       },
     })
@@ -252,7 +244,7 @@ const User = objectType({
       resolve: (parent, _, context: Context) => {
         return context.prisma.user
           .findUnique({
-            where: { id: parent.id || undefined },
+            where: {id: parent.id || undefined},
           })
           .posts()
       },
@@ -264,8 +256,8 @@ const Post = objectType({
   name: 'Post',
   definition(t) {
     t.nonNull.int('id')
-    t.nonNull.field('createdAt', { type: 'DateTime' })
-    t.nonNull.field('updatedAt', { type: 'DateTime' })
+    t.nonNull.field('createdAt', {type: 'DateTime'})
+    t.nonNull.field('updatedAt', {type: 'DateTime'})
     t.nonNull.string('title')
     t.string('content')
     t.nonNull.boolean('published')
@@ -275,7 +267,7 @@ const Post = objectType({
       resolve: (parent, _, context: Context) => {
         return context.prisma.post
           .findUnique({
-            where: { id: parent.id || undefined },
+            where: {id: parent.id || undefined},
           })
           .author()
       },
@@ -291,7 +283,7 @@ const SortOrder = enumType({
 const PostOrderByUpdatedAtInput = inputObjectType({
   name: 'PostOrderByUpdatedAtInput',
   definition(t) {
-    t.nonNull.field('updatedAt', { type: 'SortOrder' })
+    t.nonNull.field('updatedAt', {type: 'SortOrder'})
   },
 })
 
@@ -316,7 +308,7 @@ const UserCreateInput = inputObjectType({
   definition(t) {
     t.nonNull.string('email')
     t.string('name')
-    t.list.nonNull.field('posts', { type: 'PostCreateInput' })
+    t.list.nonNull.field('posts', {type: 'PostCreateInput'})
   },
 })
 
@@ -324,7 +316,7 @@ const AuthPayload = objectType({
   name: 'AuthPayload',
   definition(t) {
     t.string('token')
-    t.field('user', { type: 'User' })
+    t.field('user', {type: 'User'})
   },
 })
 
