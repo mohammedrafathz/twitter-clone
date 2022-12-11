@@ -38,7 +38,7 @@ const Login = () => {
   })
 
   return (
-    <>
+    <div className='container'>
       <img src={twitterLogo} alt='logo' style={{width: '50px'}} className='logo' />
       <h3>Log in to Fake Twitter</h3>
       <Formik
@@ -72,7 +72,7 @@ const Login = () => {
         <h4>Don't have an account?</h4>
         <Link to='/signup'>Sign Up</Link>
       </div>
-    </>
+    </div>
   );
 }
 
