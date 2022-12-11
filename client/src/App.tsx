@@ -8,11 +8,16 @@ import Users from './Components/Users';
 import Landing from './Components/Landing';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import PrivateRoute from './Components/PrivateRoute';
 
 const routes = createBrowserRouter([
   {
-    path: "/",
-    element: <Users />,
+    path: "/users",
+    element: (
+      <PrivateRoute>
+        <Users />
+      </PrivateRoute>
+    ),
   },
   {
     path: "landing",

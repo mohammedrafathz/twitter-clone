@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1>Login</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -48,7 +48,7 @@ const Login = () => {
           })
 
           localStorage.setItem("token", data.login.token);
-          navigate('/');
+          navigate('/users');
           setSubmitting(false);
 
         }}
