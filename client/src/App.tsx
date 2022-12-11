@@ -9,6 +9,7 @@ import Landing from './Components/Landing';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PrivateRoute from './Components/PrivateRoute';
+import Profile from './pages/Profile';
 
 const routes = createBrowserRouter([
   {
@@ -16,6 +17,14 @@ const routes = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Users />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <PrivateRoute>
+        <Profile />
       </PrivateRoute>
     ),
   },

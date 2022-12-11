@@ -261,10 +261,10 @@ const User = objectType({
     })
     t.field('profile', {
       type: 'Profile',
-      resolve: (parent, _, context: Context) => {
+      resolve: (parent, _, context: Context) => {        
         return context.prisma.profile
           .findUnique({
-            where: {id: parent.id || undefined}
+            where: {userId: parent.id || undefined}
           })
       }
     })
@@ -281,7 +281,7 @@ const Tweet = objectType({
     t.field('author', {
       type: 'User',
       resolve: (parent, _, context: Context) => {
-        return context.prisma.post
+        return context.prisma.tweet
           .findUnique({
             where: {id: parent.id || undefined},
           })
