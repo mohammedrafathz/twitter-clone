@@ -2,10 +2,10 @@ import React from 'react'
 import {gql, useMutation} from '@apollo/client';
 import * as Yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from 'formik';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
+import "../styles/login.css";
 import twitterLogo from '../styles/assets/twitter-logo.png'
-import {Link} from 'react-router-dom';
 
 const LOGIN_MUTATION = gql`
   mutation login( $email: String!, $password: String!){

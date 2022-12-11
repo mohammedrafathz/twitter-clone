@@ -52,7 +52,7 @@ const CreateProfile = () => {
 
   return (
     <div>
-      <button onClick={toggleModal}>Create Profile</button>
+      <button onClick={toggleModal} className='edit-button'>Create Profile</button>
       <ReactModal
         isOpen={isOpen}
         onRequestClose={toggleModal}

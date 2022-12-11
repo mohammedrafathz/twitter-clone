@@ -1,11 +1,9 @@
-import React from 'react'
 import {gql, useMutation} from '@apollo/client'
-
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {useNavigate} from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
+import "../styles/login.css";
 import twitterLogo from '../styles/assets/twitter-logo.png'
 
 const SIGNUP_MUTATION = gql`

@@ -57,7 +57,7 @@ const UpdateProfile = () => {
 
   return (
     <div>
-      <button onClick={toggleModal}>Update Profile</button>
+      <button onClick={toggleModal} className='edit-button'>Edit Profile</button>
       <ReactModal
         isOpen={open}
         onRequestClose={toggleModal}
