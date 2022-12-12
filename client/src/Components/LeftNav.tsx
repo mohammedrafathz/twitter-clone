@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 
 import favicon from '../styles/assets/twitter-logo.png';
 import '../styles/leftNav.css';
+import Logout from './Logout';
 import Tweet from './Tweet';
 
 const LeftNav = () => {
@@ -42,6 +43,7 @@ const LeftNav = () => {
         </h2>
       </Link>
       <Tweet />
+      <Logout />
     </div>
   )
 }
