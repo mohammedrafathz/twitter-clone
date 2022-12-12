@@ -1,5 +1,4 @@
 import {gql, useQuery} from '@apollo/client'
-import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 
 import "../styles/primary.css"
@@ -47,7 +46,15 @@ const Profile = () => {
             </span>
           </div>
           <div className="avatar">
-            <i className="fa fa-user fa-5x" aria-hidden='true'></i>
+            {data.me.profile.avatar ? (
+              <img
+                src={data.me.profile.avatar}
+                alt="avatar"
+                style={{width: "150px", borderRadius: "50%"}}
+              />
+            ) : (
+              <i className="fa fa-user fa-5x" aria-hidden='true'></i>
+            )}
           </div>
           <div className="make-profile">
             {data.me.profile ? <UpdateProfile /> : <CreateProfile />}
