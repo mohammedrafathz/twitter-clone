@@ -64,6 +64,22 @@ const Query = objectType({
         return context.prisma.user.findMany();
       },
     })
+    
+    t.nonNull.list.nonNull.field('tweets', {
+      type: 'Tweet',
+      args: {
+        searchString: stringArg(),
+        skip: intArg(),
+        take: intArg(),
+        orderBy: arg({
+          type: 'PostOrderByUpdatedAtInput',
+        }),
+      },
+      resolve: (_parent, args, context: Context) => {
+        
+        return context.prisma.tweet.findMany();
+      },
+    })
   },
 })
 

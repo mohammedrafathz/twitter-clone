@@ -17,7 +17,7 @@ const CREATE_TWEET_MUTATION = gql`
   }
 `
 
-type TweetValues = {
+interface TweetValues {
   content: String
 }
 

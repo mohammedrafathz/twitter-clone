@@ -10,13 +10,14 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PrivateRoute from './Components/PrivateRoute';
 import Profile from './pages/Profile';
+import Home from './pages/Home';
 
 const routes = createBrowserRouter([
   {
-    path: "/users",
+    path: "/",
     element: (
       <PrivateRoute>
-        <Users />
+        <Home />
       </PrivateRoute>
     ),
   },

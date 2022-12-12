@@ -42,6 +42,7 @@ type Profile {
 type Query {
   allUsers: [User!]!
   me: User
+  tweets(orderBy: PostOrderByUpdatedAtInput, searchString: String, skip: Int, take: Int): [Tweet!]!
   users(orderBy: PostOrderByUpdatedAtInput, searchString: String, skip: Int, take: Int): [User!]!
 }
 
