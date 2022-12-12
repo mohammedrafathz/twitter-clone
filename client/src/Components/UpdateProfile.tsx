@@ -1,7 +1,8 @@
+import {ChangeEvent, useRef, useState} from 'react'
+import ReactModal from 'react-modal'
 import {gql, useMutation, useQuery} from '@apollo/client'
 import {ErrorMessage, Field, Form, Formik} from 'formik'
-import React, {FormEvent, useRef, useState} from 'react'
-import ReactModal from 'react-modal'
+
 import {ME_QUERY} from '../pages/Profile'
 import {customStyles} from '../styles/customModalStyles'
 
@@ -60,14 +61,13 @@ const UpdateProfile = () => {
     setOpen(m => !m)
   }
 
-  const uploadImage = async (e: FormEvent<EventTarget>) => {
-    const files: any = (e.target as HTMLInputElement).files;
+  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files: any = e.target.files;
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'gyc4h3nv')
 
     setImageLoading(true);
-
 
     const res = await fetch(CLOUDINARY_ENDPOINT, {
       method: "POST",
